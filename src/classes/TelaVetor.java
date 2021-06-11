@@ -5,17 +5,26 @@
  */
 package classes;
 
+import java.util.Arrays;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Michael Coitm 
  */
 public class TelaVetor extends javax.swing.JFrame {
+    int vetor[]= new int[10];
+    DefaultListModel lista = new DefaultListModel();
+    int selecionado=0;
 
     /**
      * Creates new form TelaVetor
      */
     public TelaVetor() {
         initComponents();
+        for(int i=0; i<vetor.length; i++){
+           lista.addElement(vetor[i]);
+       }
     }
 
     /**
@@ -40,12 +49,27 @@ public class TelaVetor extends javax.swing.JFrame {
 
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdd.setText("Adicionar");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnRemove.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRemove.setText("Remover");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
 
         btnOrdena.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnOrdena.setText("Ordenar");
+        btnOrdena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Vetor");
@@ -53,6 +77,12 @@ public class TelaVetor extends javax.swing.JFrame {
         lblSeletor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblSeletor.setText("[0]");
 
+        jList1.setModel(lista);
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -75,18 +105,16 @@ public class TelaVetor extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnOrdena)
                             .addComponent(btnRemove))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))))
+                        .addGap(37, 37, 37))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                    .addComponent(txtNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAdd)
@@ -98,14 +126,47 @@ public class TelaVetor extends javax.swing.JFrame {
                                 .addComponent(btnRemove)
                                 .addGap(39, 39, 39)
                                 .addComponent(btnOrdena))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(70, 70, 70))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+       vetor[selecionado]=Integer.parseInt(txtNum.getValue().toString());
+       lista.removeAllElements();
+       for(int i=0; i<vetor.length; i++){
+           lista.addElement(vetor[i]);
+       }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        // TODO add your handling code here:
+        selecionado=jList1.getSelectedIndex();
+        lblSeletor.setText("[" +selecionado+"]");
+    }//GEN-LAST:event_jList1MouseClicked
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        vetor[selecionado]=0;
+        lista.removeAllElements();
+        for(int i=0; i<vetor.length; i++){
+           lista.addElement(vetor[i]);
+       }
+        
+    }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void btnOrdenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenaActionPerformed
+        // TODO add your handling code here:
+        
+        Arrays.sort(vetor);
+        lista.removeAllElements();
+        for(int i=0; i<vetor.length; i++){
+           lista.addElement(vetor[i]);
+       }
+    }//GEN-LAST:event_btnOrdenaActionPerformed
 
     /**
      * @param args the command line arguments
